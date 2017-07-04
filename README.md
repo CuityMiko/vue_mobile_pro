@@ -40,7 +40,6 @@ npm run publish
 + mint-ui
 + babel
 + eslint
-+ 
 ##### server
 + nodejs
 + express
@@ -73,7 +72,6 @@ import 'mint-ui/lib/style.css'
     "external-helpers"
 ]
 ```
-+ 2.
 
 
 
