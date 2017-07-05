@@ -3,6 +3,9 @@
         width: 100%;
         height: 100%;
     }
+    .home{
+        margin-bottom: 55px;
+    }
 </style>
 
 <template>
@@ -12,14 +15,8 @@
         </mt-cell>
         <div style="height:240px;">
             <mt-swipe :continuous="false" :showIndicators="true" :auto="0">
-                <mt-swipe-item>
-                    <img src="https://img3.doubanio.com/view/movie_poster_cover/lpst/public/p2471315752.webp" alt="">
-                </mt-swipe-item>
-                <mt-swipe-item>
-                    <img src="https://img3.doubanio.com/view/movie_poster_cover/lpst/public/p2471580153.webp" alt="">
-                </mt-swipe-item>
-                <mt-swipe-item>
-                    <img src="https://img3.doubanio.com/view/movie_poster_cover/lpst/public/p2460388855.webp" alt="">
+                <mt-swipe-item v-for="movie in in_theaters" :key="movie.id">
+                    <img :src="movie.images.medium" :alt="movie.title">
                 </mt-swipe-item>
             </mt-swipe>
         </div>
@@ -28,14 +25,8 @@
         </mt-cell>
         <div style="height:240px;">
             <mt-swipe :continuous="false" :showIndicators="true" :auto="0">
-                <mt-swipe-item>
-                    <img src="https://img3.doubanio.com/view/movie_poster_cover/lpst/public/p2471315752.webp" alt="">
-                </mt-swipe-item>
-                <mt-swipe-item>
-                    <img src="https://img3.doubanio.com/view/movie_poster_cover/lpst/public/p2471580153.webp" alt="">
-                </mt-swipe-item>
-                <mt-swipe-item>
-                    <img src="https://img3.doubanio.com/view/movie_poster_cover/lpst/public/p2460388855.webp" alt="">
+                <mt-swipe-item v-for="movie in coming_soons" :key="movie.id">
+                    <img :src="movie.images.medium" :alt="movie.title">
                 </mt-swipe-item>
             </mt-swipe>
         </div>
@@ -44,14 +35,8 @@
         </mt-cell>
         <div style="height:240px;">
             <mt-swipe :continuous="false" :showIndicators="true" :auto="0">
-                <mt-swipe-item>
-                    <img src="https://img3.doubanio.com/view/movie_poster_cover/lpst/public/p2471315752.webp" alt="">
-                </mt-swipe-item>
-                <mt-swipe-item>
-                    <img src="https://img3.doubanio.com/view/movie_poster_cover/lpst/public/p2471580153.webp" alt="">
-                </mt-swipe-item>
-                <mt-swipe-item>
-                    <img src="https://img3.doubanio.com/view/movie_poster_cover/lpst/public/p2460388855.webp" alt="">
+                <mt-swipe-item v-for="movie in top250s" :key="movie.id">
+                    <img :src="movie.images.medium" :alt="movie.title">
                 </mt-swipe-item>
             </mt-swipe>
         </div>
@@ -59,29 +44,43 @@
 </template>
 
 <script>
-import movieServices from '../services/movieServices.js'
+// 电影初始化缓存数据
+import movieCacheData from '../caches/movieCacheData.js'
+import { Indicator } from 'mint-ui';
 
 export default {
     data(){
         return{
-            title:'首页'
+            title:'首页',
+            in_theaters:[],
+            coming_soons:[],
+            top250s:[]
+        }
+    },
+    methods:{
+        initdata(){ // 初始化数据
+            Indicator.open({
+                text: '加载中...',
+                spinnerType: 'fading-circle'
+            });
+            let that=this;
+            movieCacheData.in_theatersData().then((res)=>{
+                that.in_theaters=res.subjects;
+            })
+            movieCacheData.coming_soonData().then((res)=>{
+                that.coming_soons=res.subjects;
+            })
+            movieCacheData.top250Data().then((res)=>{
+                Indicator.close();
+                that.top250s=res.subjects;
+            })
         }
     },
     mounted(){
         // 不显示返回按钮
         this.$store.dispatch('hidebackbtn');
-        
-        // let _params={
-        //     start:0,
-        //     count:7,
-        //     city:'杭州',
-        //     q:''
-        // }
-        // movieServices.getmoviedata('coming_soon',_params).then((res)=>{
-        //     console.log(res)
-        // },(err)=>{
-        //     console.log(err);
-        // })
+        // 初始化数据
+        this.initdata();
     }
 }
 </script>

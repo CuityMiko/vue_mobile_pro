@@ -26,15 +26,9 @@
 <template>
     <div class="guide">
         <mt-swipe :continuous="false" :showIndicators="true" :auto="0">
-            <mt-swipe-item>
-                <img src="https://img3.doubanio.com/view/movie_poster_cover/lpst/public/p2471315752.webp" alt="">
-            </mt-swipe-item>
-            <mt-swipe-item>
-                <img src="https://img3.doubanio.com/view/movie_poster_cover/lpst/public/p2471580153.webp" alt="">
-            </mt-swipe-item>
-            <mt-swipe-item>
-                <img src="https://img3.doubanio.com/view/movie_poster_cover/lpst/public/p2460388855.webp" alt="">
-                <mt-button type="primary" size="large" plain @click="gohome">立即体验</mt-button>
+            <mt-swipe-item v-for="(movie,index) in movielist" :key="movie.id">
+                <img :src="movie.images.large" :alt="movie.title">
+                <mt-button v-show="(movielist.length-1)==index" type="primary" size="large" plain @click="gohome">立即体验</mt-button>
             </mt-swipe-item>
         </mt-swipe>
     </div>
@@ -43,22 +37,32 @@
 <script>
 // 电影初始化缓存数据
 import movieCacheData from '../caches/movieCacheData.js'
+import { Indicator } from 'mint-ui';
 
 export default {
     data(){
         return{
-
+            movielist:[]
         }
     },
     methods:{
         gohome(){
             this.$router.push('/home')
+        },
+        initdata(){ // 初始化数据
+            Indicator.open({
+                text: '加载中...',
+                spinnerType: 'fading-circle'
+            });
+            let that=this;
+            movieCacheData.coming_soonData().then((res)=>{
+                Indicator.close();
+                that.movielist=res.subjects.slice(0,5);
+            })
         }
     },
     mounted(){
-        movieCacheData.coming_soonData().then((res)=>{
-            console.log(res)
-        })
+        this.initdata();
     }
 }
 </script>

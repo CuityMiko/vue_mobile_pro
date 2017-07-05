@@ -11,16 +11,19 @@ import Config from '../config.js'
 // request：当发起请求的时候的配置
 // axios.interceptors.request.use((conf)=>{
 //     store.dispatch('showloading');
+//     mapActions(['hidefooter'])
 //     return conf;
 // },(err)=>{
 //     return Promise.reject(err);
 // })
+
 // response：当响应结果的时候的配置
 // axios.interceptors.response.use((conf)=>{
 //     store.dispatch('hideloading')
 // },(err)=>{
 //     return Promise.reject(err);
 // })
+
 // 配置请求的根路径
 axios.defaults.baseURL=Config.server_url;
 // 设置默认的头部信息
