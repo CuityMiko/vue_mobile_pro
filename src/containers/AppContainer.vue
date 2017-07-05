@@ -25,6 +25,7 @@
 <script>
 import proHeader from '../components/HeaderComponent.vue'
 import proFooter from '../components/FooterComponent.vue'
+
 export default {
     data(){
         return{

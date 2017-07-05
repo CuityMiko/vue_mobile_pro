@@ -6,7 +6,7 @@ import Config from '../js/config.js'
 import httpHelper from '../js/commons/httpHelper.js'
 
 export default{
-    getmoviedata(movietype,params){
+    Getmoviedata(movietype,params){
         const apiurl=Config.apiurl.doubanurl.movie;
         const url=`${apiurl}/${movietype}`;
         return httpHelper.Jsonp(url,params);

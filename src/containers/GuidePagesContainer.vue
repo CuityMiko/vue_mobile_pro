@@ -41,6 +41,9 @@
 </template>
 
 <script>
+// 电影初始化缓存数据
+import movieCacheData from '../caches/movieCacheData.js'
+
 export default {
     data(){
         return{
@@ -51,6 +54,11 @@ export default {
         gohome(){
             this.$router.push('/home')
         }
+    },
+    mounted(){
+        movieCacheData.coming_soonData().then((res)=>{
+            console.log(res)
+        })
     }
 }
 </script>

@@ -2,7 +2,7 @@
  * 工具类
  */
 import Config from '../config.js'
-import FetchApi from './fetchApi.js' 
+import httpHelper from './httpHelper.js' 
 
 export default class Util{
     /**
@@ -10,7 +10,7 @@ export default class Util{
      */
     static getLocation(){
         return new Promise((resolve, reject)=>{
-            FetchApi.fetch(Config.apiurl.bmapurl.getLocationUrl).then((res)=>{
+            httpHelper.Jsonp(Config.apiurl.bmapurl.getLocationUrl,{}).then((res)=>{
                 let _location={
                     province:res.content.address_detail.province,
                     city:res.content.address_detail.city.substring(0,res.content.address_detail.city.length-1),
