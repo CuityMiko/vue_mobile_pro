@@ -17,15 +17,12 @@ let movieData=(movietype)=>{
         else{
             commonCacheData.locationData().then((res)=>{
                 let _params={
-                    start:0,
-                    count:Config.page.pagesize,
-                    city:res.city,
-                    q:''
+                    pageindex:1
                 }
                 movieServies.Getmoviedata(movietype,_params)
-                    .then((res)=>{ 
-                        cache.SetData(movietype,res);
-                        resolve(res) 
+                    .then((result)=>{ 
+                        cache.SetData(movietype,result);
+                        resolve(result) 
                     },(err)=>{ reject(err) })
                     .catch((err)=>{ reject(err) });
             },(err)=>{

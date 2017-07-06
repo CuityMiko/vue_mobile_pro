@@ -39,6 +39,8 @@ router.beforeEach((to, from, next) => {
 import httpHelper from './commons/httpHelper'
 Vue.prototype.$httpHelper=httpHelper; // 将httpHelper作为Vue的属性挂载到Vue上
 
+// lodash在Vue中的集成与使用
+import lodash from 'lodash'
 
 // AppContainer
 import AppContainer from '../containers/AppContainer.vue'
@@ -46,5 +48,8 @@ import AppContainer from '../containers/AppContainer.vue'
 const app =new Vue({
     router, // 将配置后的VueRouter挂载到Vue根实例上，相当于router:router的缩写
     store, // 将Vuex的Store挂载到vue的根实例上
+    data:{
+        lodash
+    },
     render:h=>h(AppContainer)
 }).$mount("#app") // $mount等同于Vue内的el属性
