@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "predev": "bower install",
-    "dev": "webpack-dev-server  --config webpack.develop.config.js --devtool eval --progress --colors --hot --content-base src --port 8070",
+    "dev": "webpack-dev-server  --config webpack.develop.config.js --devtool eval --progress --colors --hot --content-base src --port 8090",
     "publish": "webpack --config  webpack.publish.config.js",
     "gulp": "gulp"
   },

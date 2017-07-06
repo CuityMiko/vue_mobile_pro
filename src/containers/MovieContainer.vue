@@ -69,7 +69,7 @@ export default {
     },
     mounted(){
         // 固定高度
-        this.fixedTop();
+        // this.fixedTop();
         // 显示返回按钮
         this.$store.dispatch('showbackbtn');
         // 默认选中选项卡

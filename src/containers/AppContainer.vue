@@ -6,6 +6,7 @@
         position:absolute;
         width: 100%;
         height: 100%;
+        /*margin-top: 36px;*/
     }
 </style>
 
@@ -19,12 +20,14 @@
         </div>
         <!--Footer-->
         <proFooter></proFooter>
+        <BackTop></BackTop>
     </div>
 </template>
 
 <script>
 import proHeader from '../components/HeaderComponent.vue'
 import proFooter from '../components/FooterComponent.vue'
+import BackTop from '../components/BackTopComponent.vue'
 
 export default {
     data(){
@@ -34,7 +37,8 @@ export default {
     },
     components:{
         proHeader,
-        proFooter
+        proFooter,
+        BackTop
     }
 }
 </script>
