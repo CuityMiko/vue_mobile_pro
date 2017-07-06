@@ -13,7 +13,9 @@
         <mt-search
             v-model.trim="searchtxt"
             cancel-text="取消"
-            placeholder="搜索电影/导演/演员..." @keyup.enter.native="gosearch">
+            placeholder="搜索电影/导演/演员..." @keyup.enter.native="gosearch"
+            :autofocus="true"
+            >
         </mt-search>
         <MovieList :movietype="'search'" :search="tosearch"></MovieList>
     </div>

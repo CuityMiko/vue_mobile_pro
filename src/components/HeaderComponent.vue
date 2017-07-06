@@ -2,7 +2,7 @@
 
 </style>
 <template>
-    <mt-header :title="title" v-show="isheader" :fixed="false">
+    <mt-header :title="title" v-show="isheader" :fixed="true">
         <mt-button icon="back" v-show="isback" slot="left" @click="$router.go(-1)">返回</mt-button>
         <mt-button icon="search" v-show="issearch" slot="right" @click="$router.push('/search')"></mt-button>
     </mt-header>
