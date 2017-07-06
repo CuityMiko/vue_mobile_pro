@@ -17,6 +17,11 @@
         margin-top: 9px;
         color:#696969;
     }
+    image[lazy=loading] {
+        width: 40px;
+        height: 300px;
+        margin: auto;
+    }
 </style>
 
 <template>
@@ -36,7 +41,7 @@
                     }
                 ]">
                 <div slot="icon" class="movieitem">
-                    <img :src="movie.images.small" :alt="movie.title">
+                    <img v-lazy="movie.images.small" :alt="movie.title">
                     <div class="iteminfo">
                         <strong class="title">{{movie.title}}</strong>
                         <span class="cls">类型：{{movie.genres.join("、")}}</span>

@@ -9,6 +9,10 @@ import Mint from 'mint-ui';
 import 'mint-ui/lib/style.css'
 Vue.use(Mint);
 
+// 图片的延迟加载
+import { Lazyload } from 'mint-ui';
+Vue.use(Lazyload);
+
 // Vue-Router
 import VueRouter from 'vue-router'
 Vue.use(VueRouter)  // 在Vue中注册VueRouter
