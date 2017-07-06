@@ -14,7 +14,7 @@ export default{
             getLocationUrl:`https://api.map.baidu.com/location/ip?ak=${_keys.bmapkey}&coor=bd09ll`
         },
         doubanurl:{
-            movie:'https://api.douban.com/v2/movie/'
+            movie:'https://api.douban.com/v2/movie'
         }
     }
 }

@@ -20,33 +20,36 @@
 </style>
 
 <template>
-    <mt-loadmore :bottomPullText="'上拉刷新'" :bottomDropText="'释放更新'" :bottomLoadingText="'信息加载中,请耐心等待...'" :bottom-method="loadBottom" :bottom-loaded="Loaded" :bottom-all-loaded="allLoaded" ref="loadmore">
-        <mt-cell-swipe
-            v-for="movie in movielist" :key="movie.id"
-            is-link
-            :right="[
-                {
-                    content: '收藏',
-                    style: { background: '#2E8B57', color: '#fff',padding:'39px 10px' },
-                    handler: () => {
-                        // this.$messagebox('添加')
+    <div>
+        <mt-cell v-show="info.length>0" :title="info"></mt-cell>
+        <mt-loadmore :bottomPullText="'上拉刷新'" :bottomDropText="'释放更新'" :bottomLoadingText="'信息加载中,请耐心等待...'" :bottom-method="loadBottom" :bottom-loaded="Loaded" :bottom-all-loaded="allLoaded" ref="loadmore">
+            <mt-cell-swipe
+                v-for="movie in movielist" :key="movie.id"
+                is-link
+                :right="[
+                    {
+                        content: '收藏',
+                        style: { background: '#2E8B57', color: '#fff',padding:'39px 10px' },
+                        handler: () => {
+                            // this.$messagebox('添加')
+                        }
                     }
-                }
-            ]">
-            <div slot="icon" class="movieitem">
-                <img :src="movie.images.small" :alt="movie.title">
-                <div class="iteminfo">
-                    <strong class="title">{{movie.title}}</strong>
-                    <span class="cls">类型：{{movie.genres.join("、")}}</span>
-                    <div class="cls">
-                        导演：<span v-for="(director,index) in movie.directors" :key="director.id">{{director.name}}<span v-if="!(index==movie.directors.length-1)">、</span></span>
+                ]">
+                <div slot="icon" class="movieitem">
+                    <img :src="movie.images.small" :alt="movie.title">
+                    <div class="iteminfo">
+                        <strong class="title">{{movie.title}}</strong>
+                        <span class="cls">类型：{{movie.genres.join("、")}}</span>
+                        <div class="cls">
+                            导演：<span v-for="(director,index) in movie.directors" :key="director.id">{{director.name}}<span v-if="!(index==movie.directors.length-1)">、</span></span>
+                        </div>
+                        <span class="cls">上映时间：{{movie.year}}年</span>
+                        <span class="cls">评分：<mt-badge type="error" v-if="movie.rating.average">{{movie.rating.average}}分</mt-badge><span style="color:#BEBEBE" v-else>暂无评分</span></span>
                     </div>
-                    <span class="cls">上映时间：{{movie.year}}年</span>
-                    <span class="cls">评分：<mt-badge type="error" v-if="movie.rating.average">{{movie.rating.average}}分</mt-badge><span style="color:#BEBEBE" v-else>暂无评分</span></span>
                 </div>
-            </div>
-        </mt-cell-swipe>
-    </mt-loadmore>
+            </mt-cell-swipe>
+        </mt-loadmore>
+    </div>
 </template>
 
 <script>
@@ -64,10 +67,12 @@ export default {
             pagecount:1,
             movielist:[],
             allLoaded:false,
-            Loaded:false
+            Loaded:false,
+            total:0,
+            info:''
         }
     },
-    props:['movietype'],
+    props:['movietype','search','initpage'],
     methods:{
         initdata(){ // 初始化数据
             Indicator.open({
@@ -97,7 +102,11 @@ export default {
                         that.movielist=res.subjects;
                     })
                     break;
+                case "search":
+                    setTimeout(()=>{ Indicator.close(); },1)
+                    break
                 default:
+                    Indicator.close();
                     break;
             }    
         },
@@ -109,36 +118,47 @@ export default {
                 this.$refs.loadmore.onBottomLoaded();
                 Toast('到底啦！');
             }else{
-                let that=this;
-                let _params={
-                    pageindx:that.pageindex
-                }
-                movieServices.Getmoviedata(that.movietype,_params).then((res)=>{
-                    that.Loaded=true; // 加载中
-                    that.$refs.loadmore.onBottomLoaded();
-                    if(res.subjects.length>0){
-                        let newarrs = that.$root.$data.lodash.concat(that.movielist,res.subjects)
-                        that.movielist=newarrs;
-                        that.pageindex++;
-                    }
-                    else
-                        Toast('数据加载失败！');
-                },(err)=>{ 
-                    that.Loaded=true; // 加载中
-                    that.$refs.loadmore.onBottomLoaded();
-                    Toast('数据加载失败！'); 
-                })
-                .catch((err)=>{ 
-                    that.Loaded=true; // 加载中
-                    that.$refs.loadmore.onBottomLoaded();
-                    Toast('数据加载失败！'); 
-                })
+                this.getpageData();
             }
         },
         // 分页
-        getpageData(movietype){
-            
-            // movieServices.Getmoviedata(movietype,)
+        getpageData(){
+            let that=this;
+            let _params={
+                pageindx: that.pageindex,
+                q:that.search || ''
+            }
+            Indicator.open({
+                text: '加载中...',
+                spinnerType: 'fading-circle'
+            });
+            movieServices.Getmoviedata(that.movietype,_params).then((res)=>{
+                Indicator.close();
+                that.Loaded=true; // 加载中
+                that.$refs.loadmore.onBottomLoaded();
+                // search结果内容
+                that.total=res.total;
+                that.loadinfo();
+                that.pagecount = Math.ceil(parseInt(res.total)/Config.page.pagesize);
+                if(res.subjects.length>0){
+                    let newarrs = that.$root.$data.lodash.concat(that.movielist,res.subjects)
+                    that.movielist=newarrs;
+                    that.pageindex++;
+                }
+                else
+                    Toast('数据加载失败！');
+            },(err)=>{ 
+                Indicator.close();
+                that.Loaded=true; // 加载中
+                that.$refs.loadmore.onBottomLoaded();
+                Toast('数据加载失败！'); 
+            })
+            .catch((err)=>{ 
+                Indicator.close();
+                that.Loaded=true; // 加载中
+                that.$refs.loadmore.onBottomLoaded();
+                Toast('数据加载失败！'); 
+            })
         },
         // 判断是否到底
         judgeToend(){
@@ -146,11 +166,25 @@ export default {
                 return true
             else
                 return false
+        },
+        loadinfo(){
+            if(this.search && this.search.length>0 && this.total>0)
+                this.info=`共找到${this.total}项“${this.search}”相关的内容`;
+            if(this.search && this.search.length>0 && this.total<=0 )
+                this.info=`暂无“${this.search}”相关的内容`;
         }
     },
     mounted(){
         // 初始化数据
         this.initdata();
+    },
+    watch:{
+        search(){ // 监听搜索文本框的变化
+            this.movielist=[];
+            this.pageindex=1;
+            this.info="";
+            this.getpageData();
+        }
     }
 }
 </script>
