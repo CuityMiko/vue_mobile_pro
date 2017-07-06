@@ -33,6 +33,7 @@ export default {
     },
     mounted(){
         this.$store.dispatch('hideheader');
+        this.$store.dispatch('showbackbtn');
     },
     methods:{
         gosearch(){
