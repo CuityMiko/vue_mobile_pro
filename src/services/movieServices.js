@@ -26,5 +26,16 @@ export default{
                 reject(err)
             })
         })
+    },
+    // 获取电影详情
+    Getmoviedetail(id){
+        const apiurl=Config.apiurl.doubanurl.movie;
+        const url=`${apiurl}/subject/${id}`;
+        return new Promise((resolve,reject)=>{
+            let _params={}
+            httpHelper.Jsonp(url,_params)
+                .then((res)=>{ resolve(res) },(err)=>{ reject(err) })
+                .catch((err)=>{ reject(err) });
+        })
     }
 }

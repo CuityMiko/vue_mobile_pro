@@ -9,6 +9,8 @@ const HomeContainer = r => require.ensure([], () => r(require('../containers/Hom
 const SearchContainer = r => require.ensure([], () => r(require('../containers/SearchContainer.vue')), 'search')
 // 电影页
 const MovieContainer = r => require.ensure([], () => r(require('../containers/MovieContainer.vue')), 'movie')
+// 电影详情页
+const MovieDetailContainer = r => require.ensure([], () => r(require('../containers/MovieDetailContainer.vue')), 'moviedetail')
 // 404
 const NoFindContainer = r => require.ensure([], () => r(require('../containers/NoFindContainer.vue')), '404')
 
@@ -24,6 +26,10 @@ export default[
     {
         path:'/search',
         component:SearchContainer
+    },
+    {
+        path:'/movie/detail/:id',
+        component:MovieDetailContainer
     },
     {
         path:'/movie/:type',

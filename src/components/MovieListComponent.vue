@@ -31,6 +31,7 @@
             <mt-cell-swipe
                 v-for="movie in movielist" :key="movie.id"
                 is-link
+                :to="'/movie/detail/'+movie.id"
                 :right="[
                     {
                         content: '收藏',
