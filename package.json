@@ -8,7 +8,8 @@
     "predev": "bower install",
     "dev": "webpack-dev-server  --config webpack.develop.config.js --devtool eval --progress --colors --hot --content-base src --port 8090",
     "publish": "webpack --config  webpack.publish.config.js",
-    "gulp": "gulp"
+    "gulp": "gulp",
+    "browsersync": "gulp browser-sync-proxy"
   },
   "author": "CuityMiko",
   "license": "ISC",
@@ -61,6 +62,7 @@
     "babel-plugin-import": "^1.1.0",
     "babel-plugin-transform-object-assign": "^6.8.0",
     "blueimp-md5": "^2.3.0",
+    "browser-sync": "^2.24.4",
     "classnames": "^2.2.5",
     "curry": "~1.2.0",
     "fetch-jsonp": "^1.1.1",

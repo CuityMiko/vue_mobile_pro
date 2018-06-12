@@ -21,6 +21,9 @@
         width: 40px;
         height: 300px;
         margin: auto;
+        
+        justify-content: center;
+        align-items: center;
     }
 </style>
 
@@ -35,14 +38,12 @@
                 :right="[
                     {
                         content: '收藏',
-                        style: { background: '#2E8B57', color: '#fff',padding:'39px 10px' },
-                        handler: () => {
-                            // this.$messagebox('添加')
-                        }
+                        style: { background: '#2E8B57', color: '#fff', display: 'flex', justifyContent: 'center', alignItems: 'center' },
+                        handler: shoucang
                     }
                 ]">
                 <div slot="icon" class="movieitem">
-                    <img v-lazy="movie.images.small" :alt="movie.title">
+                    <img v-lazy="movie.images.small" :alt="movie.title" style="width: 9rem; height: 9rem;">
                     <div class="iteminfo">
                         <strong class="title">{{movie.title}}</strong>
                         <span class="cls">类型：{{movie.genres.join("、")}}</span>
@@ -80,6 +81,13 @@ export default {
     },
     props:['movietype','search','initpage'],
     methods:{
+        // 收藏
+        shoucang() {
+            Toast({
+                message: '收藏成功',
+                iconClass: 'icon icon-success'
+            });
+        },
         initdata(){ // 初始化数据
             Indicator.open({
                 text: '加载中...',

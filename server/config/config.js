@@ -21,5 +21,5 @@ module.exports = {
     cacheRedisPort: 6379, //用于存储cache的redis服务端口
     cacheRedis_OPTS:{},
     // mongodb数据库连接字符串
-    mongodbUrl:'mongodb://127.0.0.1:27017/demo'
+    mongodbUrl:'mongodb://47.97.190.44:27017/demo'
 }; 

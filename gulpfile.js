@@ -9,6 +9,8 @@ var gulpSequence = require('gulp-sequence');
 var webpack = require("webpack");
 // 引入wbpack的配置文件
 var webpackConfig = require("./webpack.publish.config.js");
+var gulp = require('gulp');
+var browserSync = require('browser-sync').create();
 
 gulp.task('default', ['sequence'], function () {
     console.log("项目构建成功");
@@ -38,5 +40,16 @@ gulp.task('webpack', function (cb) {
             cb();
         }
 
+    });
+});
+
+// browser-sync
+gulp.task('browser-sync-proxy', function() {
+    browserSync.init({
+        proxy: 'localhost:8090',
+        port: 7000, // 默认端口号：3000，指定端口
+        ui: {
+            port: 7001 // browser-sync ui默认端口号：3001
+        }
     });
 });

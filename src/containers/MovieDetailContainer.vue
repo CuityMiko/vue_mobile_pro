@@ -20,6 +20,8 @@
     .director{
         display: flex;
         flex-direction: row;
+        overflow-x: scroll;
+        width: 23rem;
     }
     .director img{
         margin: 9px;
@@ -69,7 +71,7 @@
                 <div style="color:#D3D3D3;padding-top: 9px;">导演</div>
                 <div class="director">
                     <div v-for="director in movie.directors" :key="director.id" class="directoritem">
-                        <img :src="director.avatars.small" alt="director.name">
+                        <img :src="getimageurl(director.avatars.small)" :alt="director.name" style="width: 6rem; height: 6rem;">
                         <span style="margin:9px;margin-top:3px;font-size:13px;">{{director.name}}</span>
                     </div>
                 </div>
@@ -80,7 +82,7 @@
                 <div style="color:#D3D3D3;padding-top: 9px;">演员</div>
                 <div class="director">
                     <div v-for="cast in movie.casts" :key="cast.id" class="directoritem">
-                        <img :src="cast.avatars.small" alt="cast.name">
+                        <img :src="getimageurl(cast.avatars.small)" :alt="cast.name" style="width: 6rem; height: 6rem;">
                         <span style="margin:9px;margin-top:3px;font-size:13px;">{{cast.name}}</span>
                     </div>
                 </div>
@@ -110,6 +112,15 @@ export default {
         },(err)=>{
             MessageBox('温馨提示', '内容获取失败！');
         })
+    },
+    methods: {
+        getimageurl(_url) {
+            // return url + '?v=' + (new Date()).getTime();
+            if( _url !== undefined ){
+                var _u = _url.substring( 7 );
+                return 'https://images.weserv.nl/?url=' + _u;
+            }
+        }
     }
 }
 </script>

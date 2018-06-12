@@ -25,7 +25,7 @@ import Config from '../config.js'
 // })
 
 // 配置请求的根路径
-axios.defaults.baseURL=Config.server_url;
+axios.defaults.baseURL=Config.apiurl.doubanurl;
 // 设置默认的头部信息
 // axios.defaults.headers.post['Content-Type']='application/x-www-form-urlencoded'; // post请求需要设置的头部信息
 
