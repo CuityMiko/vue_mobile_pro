@@ -49,6 +49,9 @@ import lodash from 'lodash'
 // AppContainer
 import AppContainer from '../containers/AppContainer.vue'
 
+// weixin jssdk
+require('./commons/wx.js')(Vue)
+
 const app =new Vue({
     router, // 将配置后的VueRouter挂载到Vue根实例上，相当于router:router的缩写
     store, // 将Vuex的Store挂载到vue的根实例上

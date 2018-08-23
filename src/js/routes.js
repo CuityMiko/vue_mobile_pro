@@ -13,6 +13,8 @@ const MovieContainer = r => require.ensure([], () => r(require('../containers/Mo
 const MovieDetailContainer = r => require.ensure([], () => r(require('../containers/MovieDetailContainer.vue')), 'moviedetail')
 // 404
 const NoFindContainer = r => require.ensure([], () => r(require('../containers/NoFindContainer.vue')), '404')
+// 我的
+const UserContainer = r => require.ensure([], () => r(require('../containers/UserContainer.vue')), 'user')
 
 export default[
     {
@@ -26,6 +28,10 @@ export default[
     {
         path:'/search',
         component:SearchContainer
+    },
+    {
+        path:'/user',
+        component:UserContainer
     },
     {
         path:'/movie/detail/:id',

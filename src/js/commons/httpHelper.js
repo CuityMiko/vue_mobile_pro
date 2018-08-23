@@ -71,7 +71,7 @@ export default class HttpHelper{
                 params:params
             })  
             .then((res) => {
-                if (res.status==200 && res.statusText=="OK")
+                if (res.status==200 )
                     return res.data;
                 else
                     reject(new Error('服务器繁忙，请稍后再试；\r\nCode:' + res.status));
@@ -93,7 +93,7 @@ export default class HttpHelper{
     axiosPost(url,params){
         return new Promise((resolve, reject)=>{
             axios.post(url, qs.stringify(params)).then(function(res) {
-                if (res.status==200 && res.statusText=="OK")
+                if (res.status==200 )
                     return res.data;
                 else
                     reject(new Error('服务器繁忙，请稍后再试；\r\nCode:' + res.status));

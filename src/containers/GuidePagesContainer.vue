@@ -19,7 +19,7 @@
         border: 1px solid #fff;
         color: Green;
         font-size: 24px;
-        height: 50px
+        height: 50px;
     }
 </style>
 
