@@ -4,3 +4,4 @@ dist/
 preview/
 src/bower_components/
 typings/
+npm-debug.log

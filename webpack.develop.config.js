@@ -82,7 +82,7 @@ module.exports = {
         //}
     },
     plugins: [
-        new OpenBrowserPlugin({url: 'http://localhost:8090/', browser: '360chrome'})
+        new OpenBrowserPlugin({url: 'http://localhost:8090/'})
     ]
 }
 
